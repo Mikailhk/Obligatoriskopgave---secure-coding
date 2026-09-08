@@ -1,0 +1,28 @@
+﻿@page
+@model SecureCodingWebshop.Pages.OrderHistoryModel
+
+<h2>Ordrehistorik</h2>
+
+<form method="get">
+    <input type="email" name="email" placeholder="Indtast email" required />
+    <button type="submit">Vis ordrer</button>
+</form>
+
+<table>
+    <tr>
+        <th>Ordre ID</th>
+        <th>Email</th>
+        <th>Totalpris</th>
+        <th>Dato</th>
+    </tr>
+
+    @foreach (var order in Model.Orders)
+    {
+        <tr>
+            <td>@order.Id</td>
+            <td>@order.UserEmail</td>
+            <td>@order.TotalPrice kr.</td>
+            <td>@order.OrderDate</td>
+        </tr>
+    }
+</table>

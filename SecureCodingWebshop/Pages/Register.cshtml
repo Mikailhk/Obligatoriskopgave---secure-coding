@@ -1,0 +1,21 @@
+﻿@page
+@model SecureCodingWebshop.Pages.RegisterModel
+
+<h2>Opret bruger</h2>
+
+<div asp-validation-summary="All"></div>
+
+<form method="post">
+    <div>
+        <label>Email</label>
+        <input type="email" name="Email" required />
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input type="password" name="Password" required />
+        <p>Password skal være mindst 8 tegn.</p>
+    </div>
+
+    <button type="submit">Opret bruger</button>
+</form>

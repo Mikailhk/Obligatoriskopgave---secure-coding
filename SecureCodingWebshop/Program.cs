@@ -1,7 +1,16 @@
+using SecureCodingWebshop.Data;
+using SecureCodingWebshop.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<PasswordService>();
+builder.Services.AddScoped<ProductRepository>();
+builder.Services.AddSingleton<CartService>();
+builder.Services.AddScoped<OrderRepository>();
+builder.Services.AddSingleton<LogService>();
 
 var app = builder.Build();
 

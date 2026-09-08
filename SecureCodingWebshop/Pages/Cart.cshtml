@@ -1,0 +1,21 @@
+﻿@page
+@model SecureCodingWebshop.Pages.CartModel
+
+<h2>Kurv</h2>
+
+<table>
+    <tr>
+        <th>Produkt</th>
+        <th>Pris</th>
+        <th>Antal</th>
+    </tr>
+
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price kr.</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+</table>

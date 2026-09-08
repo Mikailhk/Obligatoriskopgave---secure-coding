@@ -1,0 +1,17 @@
+﻿@page
+@model SecureCodingWebshop.Pages.AdminLogsModel
+
+<h2>System logs</h2>
+
+<table>
+    <tr>
+        <th>Log</th>
+    </tr>
+
+    @foreach (var log in Model.Logs)
+    {
+        <tr>
+            <td>@log</td>
+        </tr>
+    }
+</table>

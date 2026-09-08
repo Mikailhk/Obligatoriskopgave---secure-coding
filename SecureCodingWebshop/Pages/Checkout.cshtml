@@ -1,0 +1,26 @@
+﻿@page
+@model SecureCodingWebshop.Pages.CheckoutModel
+
+<h2>Checkout</h2>
+<p>@Model.Message</p>
+
+<table>
+    <tr>
+        <th>Produkt</th>
+        <th>Pris</th>
+        <th>Antal</th>
+    </tr>
+
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Price kr.</td>
+            <td>@item.Quantity</td>
+        </tr>
+    }
+</table>
+
+<form method="post">
+    <button type="submit">Gennemfør køb</button>
+</form>
