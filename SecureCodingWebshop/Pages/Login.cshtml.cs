@@ -11,6 +11,9 @@ namespace SecureCodingWebshop.Pages
         private readonly PasswordService _passwordService;
         private readonly LogService _logService;
 
+        private static int _failedLoginAttempts = 0;
+        private static DateTime? _lockoutEnd = null;
+
         public LoginModel(
             UserRepository userRepository,
             PasswordService passwordService,
@@ -33,10 +36,24 @@ namespace SecureCodingWebshop.Pages
 
         public IActionResult OnPost()
         {
+            if (_lockoutEnd != null && DateTime.Now < _lockoutEnd)
+            {
+                ModelState.AddModelError("", "Login er midlertidigt blokeret. Prøv igen senere.");
+                return Page();
+            }
+
+            if (_lockoutEnd != null && DateTime.Now >= _lockoutEnd)
+            {
+                _failedLoginAttempts = 0;
+                _lockoutEnd = null;
+            }
+
             var user = _userRepository.GetUserByEmail(Email);
 
             if (user == null)
             {
+                _failedLoginAttempts++;
+
                 _logService.Log($"Mislykket loginforsøg for email: {Email}");
 
                 ModelState.AddModelError("", "Forkert email eller password");
@@ -48,11 +65,25 @@ namespace SecureCodingWebshop.Pages
 
             if (!passwordCorrect)
             {
+                _failedLoginAttempts++;
+
+                if (_failedLoginAttempts >= 3)
+                {
+                    _lockoutEnd = DateTime.Now.AddMinutes(10);
+
+                    _logService.Log($"Bruger midlertidigt blokeret efter 3 mislykkede loginforsøg: {Email}");
+
+                    ModelState.AddModelError("", "For mange mislykkede loginforsøg.");
+                    return Page();
+                }
+
                 _logService.Log($"Mislykket loginforsøg for email: {Email}");
 
                 ModelState.AddModelError("", "Forkert email eller password");
                 return Page();
             }
+
+            _failedLoginAttempts = 0;
 
             _logService.Log($"Succesfuldt login for email: {Email}");
 
