@@ -31,7 +31,7 @@ namespace SecureCodingWebshop.Data
         {
             using SqlConnection connection = new SqlConnection(_connectionString);
 
-            string sql = "SELECT Id, Email, PasswordHash FROM Users WHERE Email = @Email";
+            string sql = "SELECT Id, Email, PasswordHash, Role FROM Users WHERE Email = @Email";
 
             using SqlCommand command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@Email", email);
@@ -46,7 +46,8 @@ namespace SecureCodingWebshop.Data
                 {
                     Id = reader.GetInt32(0),
                     Email = reader.GetString(1),
-                    PasswordHash = reader.GetString(2)
+                    PasswordHash = reader.GetString(2),
+                    Role = reader.GetString(3)
                 };
             }
 

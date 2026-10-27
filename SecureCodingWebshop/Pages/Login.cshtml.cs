@@ -85,6 +85,9 @@ namespace SecureCodingWebshop.Pages
 
             _failedLoginAttempts = 0;
 
+            HttpContext.Session.SetString("UserEmail", user.Email);
+            HttpContext.Session.SetString("UserRole", user.Role);
+
             _logService.Log($"Succesfuldt login for email: {Email}");
 
             return RedirectToPage("/Index");

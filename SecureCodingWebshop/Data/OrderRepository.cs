@@ -41,5 +41,23 @@ namespace SecureCodingWebshop.Data
 
             return orders;
         }
+
+
+        public void AddOrder(string email, decimal totalPrice)
+        {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+
+            string sql = "INSERT INTO Orders (UserEmail, TotalPrice, OrderDate) VALUES (@Email, @TotalPrice, @OrderDate)";
+
+            using SqlCommand command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@Email", email);
+            command.Parameters.AddWithValue("@TotalPrice", totalPrice);
+            command.Parameters.AddWithValue("@OrderDate", DateTime.Now);
+
+            connection.Open();
+            command.ExecuteNonQuery();
+        }
+
     }
 }

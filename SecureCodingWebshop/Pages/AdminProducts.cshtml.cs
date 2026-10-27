@@ -22,13 +22,24 @@ namespace SecureCodingWebshop.Pages
             _productRepository = productRepository;
         }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/Login");
+            }
+
             Products = _productRepository.GetAll();
+            return Page();
         }
 
         public IActionResult OnPost()
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/Login");
+            }
+
             Product product = new Product
             {
                 Name = Name,
@@ -42,6 +53,11 @@ namespace SecureCodingWebshop.Pages
 
         public IActionResult OnPostDelete(int id)
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/Login");
+            }
+
             _productRepository.Delete(id);
 
             return RedirectToPage();
@@ -49,6 +65,11 @@ namespace SecureCodingWebshop.Pages
 
         public IActionResult OnPostUpdate(int id, string name, decimal price)
         {
+            if (HttpContext.Session.GetString("UserRole") != "Admin")
+            {
+                return RedirectToPage("/Login");
+            }
+
             Product product = new Product
             {
                 Id = id,

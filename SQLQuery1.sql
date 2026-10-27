@@ -1,0 +1,8 @@
+﻿ALTER TABLE Users
+ADD ResetToken NVARCHAR(255) NULL,
+    ResetTokenExpiry DATETIME2 NULL;
+
+USE SecureCodingWebshopDB;
+
+ALTER TABLE Users
+ADD Role NVARCHAR(20) NOT NULL DEFAULT 'Customer';
